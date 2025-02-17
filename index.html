@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JavaScript Event Explorer</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            min-height: 100vh;
+            background-color: #f4f4f4;
+            padding: 10px;
+        }
+        #eventList, #eventTester {
+            width: 90%;
+            max-width: 600px;
+            padding: 20px;
+            background: white;
+            box-shadow: 5px 5px 10px #ccc, -5px -5px 10px #fff;
+            border-radius: 10px;
+            margin: 10px;
+        }
+        #testBox, #formExample, #dragExample {
+            width: 100%;
+            height: 100px;
+            margin-top: 10px;
+            border: 2px solid #888;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 16px;
+            background-color: #eee;
+            cursor: pointer;
+        }
+        input, select {
+            display: block;
+            margin: 10px auto;
+            padding: 5px;
+        }
+        @media (max-width: 600px) {
+            #eventList, #eventTester {
+                width: 100%;
+                padding: 15px;
+            }
+            #testBox, #formExample, #dragExample {
+                height: 80px;
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>JavaScript Event Explorer</h1>
+    
+    <div id="eventList">
+        <h2>Events</h2>
+        <h3>Mouse Events</h3>
+        <ul id="mouseEvents"></ul>
+        <h3>Keyboard Events</h3>
+        <ul id="keyboardEvents"></ul>
+        <h3>Form Events</h3>
+        <ul id="formEvents"></ul>
+        <h3>Touch Events</h3>
+        <ul id="touchEvents"></ul>
+        <h3>Drag Events</h3>
+        <ul id="dragEvents"></ul>
+    </div>
+    
+    <div id="eventTester">
+        <h2>Try an Event</h2>
+        <p>Click or interact with the box below to see events in action:</p>
+        <div id="testBox">Click me!</div>
+        <p id="eventOutput">Event details will appear here.</p>
+        
+        <h3>Keyboard Event Example</h3>
+        <input type="text" id="keyboardInput" placeholder="Type something...">
+        
+        <h3>Form Event Example</h3>
+        <form id="formExample">
+            <input type="text" placeholder="Enter text">
+            <select>
+                <option value="1">Option 1</option>
+                <option value="2">Option 2</option>
+            </select>
+            <button type="submit">Submit</button>
+        </form>
+        
+        <h3>Drag Event Example</h3>
+        <div id="dragExample" draggable="true">Drag me!</div>
+    </div>
+    
+    <script>
+        const categorizedEvents = {
+            "mouseEvents": ["click", "dblclick", "contextmenu", "mousedown", "mouseup", "mousemove"],
+            "keyboardEvents": ["keydown", "keyup"],
+            "formEvents": ["input", "change", "focus", "blur", "submit"],
+            "touchEvents": ["touchstart", "touchend"],
+            "dragEvents": ["dragstart", "dragend"]
+        };
+        
+        const eventOutput = document.getElementById("eventOutput");
+        const testBox = document.getElementById("testBox");
+        const keyboardInput = document.getElementById("keyboardInput");
+        const formExample = document.getElementById("formExample");
+        const dragExample = document.getElementById("dragExample");
+        
+        Object.keys(categorizedEvents).forEach(category => {
+            const eventList = document.getElementById(category);
+            categorizedEvents[category].forEach(event => {
+                let li = document.createElement("li");
+                li.textContent = event;
+                eventList.appendChild(li);
+                
+                testBox.addEventListener(event, e => {
+                    eventOutput.textContent = `Event: ${e.type} triggered!`;
+                });
+            });
+        });
+        
+        keyboardInput.addEventListener("keydown", e => {
+            eventOutput.textContent = `Keyboard Event: ${e.type} - Key: ${e.key}`;
+        });
+        
+        formExample.addEventListener("submit", e => {
+            e.preventDefault();
+            eventOutput.textContent = "Form submitted!";
+        });
+        
+        dragExample.addEventListener("dragstart", () => {
+            eventOutput.textContent = "Dragging started!";
+        });
+        dragExample.addEventListener("dragend", () => {
+            eventOutput.textContent = "Dragging ended!";
+        });
+    </script>
+</body>
+</html>

@@ -4,74 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gradient Color Picker</title>
-    <style>
-        body {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            height: 100vh;
-            font-family: Arial, sans-serif;
-            padding: 20px;
-            box-sizing: border-box;
-            text-align: center;
-            transition: background 0.5s ease;
-        }
-        .container {
-            padding: 20px;
-            border-radius: 20px;
-            width: 90%;
-            max-width: 400px;
-            background: #f0f0f0;
-        }
-        input[type="color"], select {
-            border: none;
-            outline: none;
-            width: 100px;
-            height: 40px;
-            border-radius: 10px;
-            box-shadow: inset 5px 5px 10px #bebebe, inset -5px -5px 10px #ffffff;
-            margin: 10px;
-            padding: 5px;
-            cursor: pointer;
-        }
-        #gradient-box {
-            width: 100%;
-            height: 150px;
-            margin: 20px auto;
-            border-radius: 15px;
-            box-shadow: inset 10px 10px 20px #bebebe, inset -10px -10px 20px #ffffff;
-            background: linear-gradient(to right, #ff0000, #0000ff);
-        }
-        button {
-            padding: 10px 20px;
-            border: none;
-            border-radius: 10px;
-            box-shadow: 5px 5px 10px #bebebe, -5px -5px 10px #ffffff;
-            cursor: pointer;
-            font-size: 16px;
-            margin-top: 10px;
-            width: 100%;
-        }
-        button:active {
-            box-shadow: inset 5px 5px 10px #bebebe, inset -5px -5px 10px #ffffff;
-        }
-        textarea {
-            width: 100%;
-            margin-top: 10px;
-            display: none;
-            resize: none;
-        }
-        @media (max-width: 500px) {
-            input[type="color"], select {
-                width: 80px;
-                height: 35px;
-            }
-            button {
-                font-size: 14px;
-            }
-        }
-    </style>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body id="gradient-body">
     <div class="container" id="neomorph-container">
@@ -94,35 +27,7 @@
         <textarea id="gradient-css" readonly></textarea>
     </div>
 
-    <script>
-        function updateGradient() {
-            let color1 = document.getElementById("color1").value;
-            let color2 = document.getElementById("color2").value;
-            let direction = document.getElementById("direction").value;
-            let gradientCSS = `linear-gradient(${direction}, ${color1}, ${color2})`;
-            document.getElementById("gradient-body").style.background = gradientCSS;
-            document.getElementById("gradient-box").style.background = gradientCSS;
-            document.getElementById("gradient-css").value = `background: ${gradientCSS};`;
-            document.getElementById("gradient-css").style.display = "block";
-        }
-        
-      function copyGradient() {
-    let gradientText = document.getElementById("gradient-css");
-
-    if (navigator.clipboard) {
-        navigator.clipboard.writeText(gradientText.value)
-            .then(() => alert("Gradient CSS copied to clipboard!"))
-            .catch(err => console.error("Error copying text: ", err));
-    } else {
-        gradientText.select();
-        gradientText.setSelectionRange(0, 99999);
-        document.execCommand("copy");
-        alert("Gradient CSS copied to clipboard!");
-    }
-}
-
-        
-        updateGradient();
+    <script src="javascript.js">
     </script>
 </body>
 </html>
